@@ -8,7 +8,7 @@
 
 import argparse
 import threading
-from dataclasses import dataclasses, field 
+from dataclasses import dataclass, field 
 from enum import IntEnum
 from itertools import zip_longest
 from queue import LifoQueue, PriorityQueue, Queue
@@ -40,3 +40,13 @@ PRODUCTS = {
     ":thread:", 
     ":yo-yo:", 
 }
+
+@dataclass(order=True)
+
+#Class Product
+class Product:
+    priority: int
+    label: str = field(compare=False)
+
+    def __str__(self):
+        return self.label
