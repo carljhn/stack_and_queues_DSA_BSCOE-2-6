@@ -20,3 +20,23 @@ from rich.columns import Columns
 from rich.console import Group
 from rich.live import Live
 from rich.panel import Panel
+
+QUEUE_TYPES = {"fifo": Queue, "lifo": LifoQueue, "heap": PriorityQueue}
+
+PRODUCTS = {
+    ":balloons:", 
+    ":cookies:", 
+    ":crystal_ball:", 
+    ":diving_mask:", 
+    ":flashlight:", 
+    ":gem:", 
+    ":gift:", 
+    ":kite:", 
+    ":party_popper:", 
+    ":postal_horn:", 
+    ":ribbon:", 
+    ":rocket:", 
+    ":teddy_bear:", 
+    ":thread:", 
+    ":yo-yo:", 
+}
