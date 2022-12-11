@@ -23,9 +23,9 @@ from rich.panel import Panel
 
 QUEUE_TYPES = {"fifo": Queue, "lifo": LifoQueue, "heap": PriorityQueue}
 
-PRODUCTS = {
-    ":balloons:", 
-    ":cookies:", 
+PRODUCTS = (
+    ":balloon:", 
+    ":cookie:", 
     ":crystal_ball:", 
     ":diving_mask:", 
     ":flashlight:", 
@@ -39,7 +39,7 @@ PRODUCTS = {
     ":teddy_bear:", 
     ":thread:", 
     ":yo-yo:", 
-}
+)
 
 @dataclass(order=True)
 
@@ -92,7 +92,7 @@ class Worker(threading.Thread):
     def simulate_work(self):
         self.working = True
         self.progress = 0
-        delay = randint(1, 1 +15 // self.speed)
+        delay = randint(1, 1 + 15 // self.speed)
         for _ in range(100):
             sleep(delay / 100)
             self.progress += 1
@@ -128,7 +128,7 @@ class View:
 
     #function animate
     def animate(self):
-        with Live(self.render(), screen = True, refresh_per_second = 10) as live:
+        with Live(self.render(), screen=True, refresh_per_second=10) as live:
             while True:
                 live.update(self.render())
 
@@ -148,21 +148,21 @@ class View:
                 products = reversed(list(self.buffer.queue))
 
             case _:
-                title= products = ""
+                title = products = ""
 
-        rows = [Panel(f"[bold]{title}:[/] {', '.join(products)}", width = 82)]
-        pairs = zip_longest(self.producers, self.consumers)
+        rows=[Panel(f"[bold]{title}:[/] {', '.join(products)}", width=82)]
+        pairs=zip_longest(self.producers, self.consumers)
         for i, (producer, consumer) in enumerate(pairs, 1):
             left_panel = self.panel(producer, f"Producer {i}")
             right_panel = self.panel(consumer, f"Consumer {i}")
-            rows.append(Columns([left_panel, right_panel], width = 40))
+            rows.append(Columns([left_panel, right_panel], width=40))
         return Group(*rows)
 
     #function panel
     def panel(self, worker, title):
         if worker is None:
             return ""
-        padding = " " * int(29 /100 * worker.progress)
+        padding = " " * int(29 / 100 * worker.progress)
         align = Align(padding + worker.state, align = "left", vertical = "middle")
         return Panel(align, height = 5, title = title)
 
@@ -172,7 +172,7 @@ def main(args):
 
     products = PRIORITIZED_PRODUCTS if args.queue == "heap" else PRODUCTS
     producers = [
-        Producer(args.prducer_speed, buffer, products)
+        Producer(args.producer_speed, buffer, products)
         for _ in range(args.producers)
     ]
 
@@ -186,15 +186,15 @@ def main(args):
     for consumer in consumers:
         consumer.start()
 
-    view = View(buffer, producers, consumers)
+    view=View(buffer, producers, consumers)
     view.animate()
 
 #function parse_args
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-q", "--queue", choices = QUEUE_TYPES,  default = "fifo")
-    parser.add_argument("-p", "--producers", type = int,  default = 3)
-    parser.add_argument("-c", "--consumers", type = int,  default = 2)
+    parser.add_argument("-q", "--queue", choices=QUEUE_TYPES,  default="fifo")
+    parser.add_argument("-p", "--producers", type=int,  default=3)
+    parser.add_argument("-c", "--consumers", type=int,  default=2)
     parser.add_argument("-ps", "--producer-speed", type = int,  default = 1)
     parser.add_argument("-cs", "--consumer-speed", type = int,  default = 1)
     return parser.parse_args()
