@@ -108,4 +108,14 @@ def parse_args():
     parser.add_argument("hash_value")
     parser.add_argument("-m", "--max-length", type = int, default = 6)
     parser.add_argument("w", "--num-workers", type = int, default = multiprocessing.cpu_count(),) 
-    return parser.parse_args()      
+    return parser.parse_args()
+
+#Function chunk_indices
+def chunk_indices(length, num_chunks):
+    start = 0
+    while num_chunks > 0:
+        num_chunks = min(num_chunks, length)
+        chunk_size = round(length / num_chunks)
+        yield start, (start := start + chunk_size)
+        length -= chunk_size
+        num_chunks -= 1       
