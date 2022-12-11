@@ -73,3 +73,8 @@ async def worker(worker_id, session, queue, links, max_depth):
             print(f"[{worker_id} failed at {url=}]", file = sys.stderr)
         finally:
             queue.task_done()
+
+async def fetch_html(session, url):
+    async with session.get(url) as response:
+        if response.ok and response.content_type == "text/html":
+            return await response.text()
