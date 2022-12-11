@@ -51,6 +51,7 @@ class Product:
     def __str__(self):
         return self.label
 
+#Class Priority(IntEnum)
 class Priority(IntEnum):
     HIGH = 1
     MEDIUM = 2
@@ -61,3 +62,37 @@ PRIORITIZED_PRODUCTS = {
     Product(Priority.MEDIUM, ":2nd_place_medal:"),
     Product(Priority.LOW, ":3rd_place_medal:"),
 }
+
+#Class Worker
+class Worker(threading.Thread):
+    def __init__(self, speed, buffer):
+        super().__init__(daemon=True)
+        self.speed = speed
+        self.buffer = buffer
+        self.product = None
+        self.working = False
+        self.progress = 0
+
+    @property
+
+    #function state
+    def state(self):
+        if self.working:
+            return f"{self.product} ({self.progress}%)"
+        return ":zzz: Idle"
+
+    #function simulate_idle
+    def simulate_idle(self):
+        self.product = None
+        self.working = False
+        self.progress = 0
+        sleep(randint(1, 3))
+
+    #function simulate_work
+    def simulate_work(self):
+        self.working = True
+        self.progress = 0
+        delay = randint(1, 1 +15 // self.speed)
+        for _ in range(100):
+            sleep(delay / 100)
+            self.progress += 1
