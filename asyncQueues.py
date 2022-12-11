@@ -95,3 +95,8 @@ def parse_args():
     parser.add_argument("-d", "--max-depth", type = int, default = 2)
     parser.add_argument("-w", "--num-workers", type = int, default = 3)
     return parser.parse_args()
+
+#function display
+def display(links):
+    for url, count in links.most_common():
+        print(f"{count:>3} {url}")
