@@ -32,7 +32,7 @@ async def main(args):
         queue = asyncio.Queue()
         # queue = asyncio.LifoQueue()
         # queue = asyncio.PriorityQueue()
-        task = [
+        tasks = [
             asyncio.create_task(
                 worker(
                     f"Worker-{i + 1}",
@@ -100,3 +100,7 @@ def parse_args():
 def display(links):
     for url, count in links.most_common():
         print(f"{count:>3} {url}")
+
+#if statement
+if __name__ == "__main__":
+    asyncio.run(main(parse_args()))
