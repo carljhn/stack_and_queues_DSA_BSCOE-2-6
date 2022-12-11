@@ -101,4 +101,11 @@ def main(args):
             pass
     else:
         print("Unable to find a solution")
-        
+
+#Function parse_args
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("hash_value")
+    parser.add_argument("-m", "--max-length", type = int, default = 6)
+    parser.add_argument("w", "--num-workers", type = int, default = multiprocessing.cpu_count(),) 
+    return parser.parse_args()      
