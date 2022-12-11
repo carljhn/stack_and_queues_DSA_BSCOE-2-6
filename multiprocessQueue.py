@@ -57,4 +57,15 @@ class Worker(multiprocessing.Process):
         self.queue_in = queue_in
         self.queue_out = queue_out
         self.hash_value = hash_value
+
+    #Function run
+    def run(self):
+        while True:
+            job = self.queue_in.get()
+            if job is POISON_PILL:
+                self.queue_in.put(POISON_PILL)
+                break
+            if plaintext := job(self.hash_value):
+                self.queue_out.put(plaintext)
+                break
         
