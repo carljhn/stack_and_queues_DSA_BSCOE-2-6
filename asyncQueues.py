@@ -13,3 +13,13 @@ from urllib.parse import urljoin
 
 import aiohttp
 from bs4 import BeautifulSoup
+
+#Class Job
+class Job(NamedTuple):
+    url: str
+    depth: int = 1
+
+    #function __lt__
+    def __lt__(self, other):
+        if isinstance(other, Job):
+            return len(self.url) < len(other.url)
