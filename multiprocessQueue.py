@@ -48,3 +48,13 @@ class Job:
             hashed = md5(text_bytes).hexdigest()
             if hashed == hash_value:
                 return text_bytes.decode("utf-8")
+
+#Class Worker
+class Worker(multiprocessing.Process):
+    #Function __init__
+    def __init__(self, queue_in, queue_out, hash_value):
+        super().__init__(daemon = True)
+        self.queue_in = queue_in
+        self.queue_out = queue_out
+        self.hash_value = hash_value
+        
