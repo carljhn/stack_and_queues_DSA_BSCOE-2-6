@@ -18,3 +18,7 @@ class Combinations:
     def __init__(self, alphabet, length):
         self.alphabet = alphabet
         self.length = length
+
+    #function __len__
+    def __len__(self):
+        return len(self.alphabet) ** self.length
