@@ -149,3 +149,43 @@ class View:
 
             case _:
                 title= products = ""
+
+        rows = [Panel(f"[bold]{title}:[/] {', '.join(products)}", width = 82)]
+        pairs = zip_longest(self.producers, self.consumers)
+        for i, (producer, consumer) in enumerate(pairs, 1):
+            left_panel = self.panel(producer, f"Producer {i}")
+            right_panel = self.panel(consumer, f"Consumer {i}")
+            rows.append(Columns([left_panel, right_panel], width = 40))
+        return Group(*rows)
+
+    #function panel
+    def panel(self, worker, title):
+        if worker is None:
+            return ""
+        padding = " " * int(29 /100 * worker.progress)
+        align = Align(padding + worker.state, align = "left", vertical = "middle")
+        return Panel(align, height = 5, title = title)
+
+#function main
+def main(args):
+    buffer = QUEUE_TYPES[args.queue]()
+
+    products = PRIORITIZED_PRODUCTS if args.queue == "heap" else PRODUCTS
+    producers = [
+        Producer(args.prducer_speed, buffer, products)
+        for _ in range(args.producers)
+    ]
+
+    consumers = [
+        Consumer(args.consumer_speed, buffer) for _ in range(args.consumers)
+    ]
+
+    for producer in producers:
+        producer.start()
+
+    for consumer in consumers:
+        consumer.start()
+
+    view = View(buffer, producers, consumers)
+    view.animate()
+
