@@ -57,11 +57,11 @@ class Priority(IntEnum):
     MEDIUM = 2
     LOW = 3
 
-PRIORITIZED_PRODUCTS = {
+PRIORITIZED_PRODUCTS = (
     Product(Priority.HIGH, ":1st_place_medal:"),
     Product(Priority.MEDIUM, ":2nd_place_medal:"),
     Product(Priority.LOW, ":3rd_place_medal:"),
-}
+)
 
 #Class Worker
 class Worker(threading.Thread):
@@ -198,6 +198,9 @@ def parse_args():
     parser.add_argument("-ps", "--producer-speed", type = int,  default = 1)
     parser.add_argument("-cs", "--consumer-speed", type = int,  default = 1)
     return parser.parse_args()
-    
 
-
+if __name__ == "__main__":
+    try: 
+        main(parse_args())
+    except KeyboardInterrupt:
+        pass
