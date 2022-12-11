@@ -119,3 +119,6 @@ def chunk_indices(length, num_chunks):
         yield start, (start := start + chunk_size)
         length -= chunk_size
         num_chunks -= 1       
+
+if __name__ == "__main__":
+    main(parse_args())
