@@ -34,7 +34,7 @@ class Combinations:
             for i in reversed(range(self.length))
         )
 
-@dataclass(forzen = True)
+@dataclass(frozen = True)
 #Class Job
 class Job:
     combinations: Combinations
@@ -44,7 +44,7 @@ class Job:
     #Function __call__
     def __call__(self, hash_value):
         for index in range(self.start_index, self.stop_index):
-            text_bytes = self.combination[index].encode("utf-8")
+            text_bytes = self.combinations[index].encode("utf-8")
             hashed = md5(text_bytes).hexdigest()
             if hashed == hash_value:
                 return text_bytes.decode("utf-8")
@@ -71,7 +71,7 @@ class Worker(multiprocessing.Process):
 
 #function main
 def main(args):
-    t1 = time.perf_counter
+    t1 = time.perf_counter()
     queue_in = multiprocessing.Queue()
     queue_out = multiprocessing.Queue()
 
@@ -107,7 +107,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("hash_value")
     parser.add_argument("-m", "--max-length", type = int, default = 6)
-    parser.add_argument("w", "--num-workers", type = int, default = multiprocessing.cpu_count(),) 
+    parser.add_argument("-w", "--num-workers", type = int, default = multiprocessing.cpu_count()) 
     return parser.parse_args()
 
 #Function chunk_indices
