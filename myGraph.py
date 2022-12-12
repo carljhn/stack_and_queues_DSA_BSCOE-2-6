@@ -132,3 +132,25 @@ def search(traverse, graph, source, predicate, order_by = None):
     for node in traverse(graph, source, order_by):
         if predicate(node):
             return node
+
+#Function dijkstra_shortest_path
+def dijkstra_shortest_path(graph, source, destination, weight_factory):
+    previous = {}
+    visited = set()
+
+    unvisited = MutableMinHeap()
+    for node in graph.nodes:
+        unvisited[node] = infinity
+    unvisited[source] = 0
+
+    while unvisited:
+        visited.add(node := unvisited.dequeue())
+        for neighbor, weights in graph[node].items():
+            if neighbor not in visited:
+                weight = weight_factory(weights)
+                new_distance = unvisited[node] + weight
+                if new_distance < unvisited[neighbor]:
+                    unvisited[neighbor] = new_distance
+                    previous[neighbor]  = node
+
+    return retrace(previous, source, destination)
