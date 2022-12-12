@@ -104,3 +104,5 @@ def display(links):
 #if statement
 if __name__ == "__main__":
     asyncio.run(main(parse_args()))
+
+# python asyncQueues.py http://localhost:8000 --max-depth=4

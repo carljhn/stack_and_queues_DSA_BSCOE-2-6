@@ -122,3 +122,5 @@ def chunk_indices(length, num_chunks):
 
 if __name__ == "__main__":
     main(parse_args())
+
+#python multiprocessQueue.py a9d1cbf71942327e98b40cf5ef38a960
