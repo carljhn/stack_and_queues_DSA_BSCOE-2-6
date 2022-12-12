@@ -33,3 +33,16 @@ class Queue(IterableMixin):
 class Stack(Queue):
     def dequeue(self):
         return self._elements.pop()
+
+#Class PriorityQueue
+class PriorityQueue(IterableMixin):
+    def __init__(self):
+        self._elements = []
+        self._counter = count()
+
+    def enqueue_with_priority(self, priority, value):
+        element = (-priority, next(self._counter), value)
+        heappush(self._elements, element)
+
+    def dequeue(self):
+        return heappop(self._elements)[-1]
