@@ -17,3 +17,14 @@ class IterableMixin:
     def __iter__(self):
         while len(self) > 0:
             yield self.dequeue()
+
+#Class Queue
+class Queue(IterableMixin):
+    def __init__(self, *elements):
+        self._elements = deque(elements)
+
+    def enqueue(self, element):
+        self._elements.append(element)
+    
+    def dequeue(self):
+        return self._elements.popleft()
