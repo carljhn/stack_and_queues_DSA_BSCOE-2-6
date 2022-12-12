@@ -28,3 +28,15 @@ class City(NamedTuple):
             latitude = float(attrs["latitude"]),
             longtitude = float(attrs["longitude"]),
         )
+
+#Function load_graph
+def load_graph(filename, node_factory):
+    graph = nx.nx_agraph.read_dot(filename)
+    nodes = {
+        name: node_factory(attributes)
+        for name, attributes in graph.nodes(data = True)
+    }
+    return nodes, nx.Graph(
+        (nodes[name1], nodes[name2], weights)
+        for name1, name2, weights in graph.edges(data = True)
+    )
