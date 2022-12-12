@@ -10,3 +10,21 @@ from typing import NamedTuple
 
 import networkx as nx
 from queues import MutableMinHeap, Queue, Stack
+
+#Class City
+class City(NamedTuple):
+    name: str
+    country: str
+    year: int | None
+    latitude: float
+    longitude: float
+
+    @classmethod
+    def from_dict(cls, attrs):
+        return cls (
+            name = attrs["xlabels"],
+            country = attrs["country"],
+            year = int(attrs["year"]) or None, 
+            latitude = float(attrs["latitude"]),
+            longtitude = float(attrs["longitude"]),
+        )
