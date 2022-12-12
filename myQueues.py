@@ -46,3 +46,10 @@ class PriorityQueue(IterableMixin):
 
     def dequeue(self):
         return heappop(self._elements)[-1]
+
+@dataclass(order = True)
+#Class Element
+class Element:
+    priority: float
+    count: int
+    value: Any
