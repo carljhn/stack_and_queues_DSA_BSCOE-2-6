@@ -28,3 +28,8 @@ class Queue(IterableMixin):
     
     def dequeue(self):
         return self._elements.popleft()
+
+#Class Stack
+class Stack(Queue):
+    def dequeue(self):
+        return self._elements.pop()
