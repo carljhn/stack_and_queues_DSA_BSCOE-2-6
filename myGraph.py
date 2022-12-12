@@ -89,3 +89,21 @@ def ratrace(previous, source, destination):
     
     path.appendleft(source)
     return list(path)
+
+#Function connected
+def connected(graph, source, destination):
+    return shortest_past(graph, source, destination) is not None
+
+#Function depth_first_traverse
+def depth_first_traverse(graph, source, order_by = None):
+    stack = Stack(source)
+    visited = set()
+    while stack:
+        if (node := stack.dequeue()) not in visited:
+            yield node
+            visited.add(node)
+            neighbors = list(graph.neighbors(node))
+            if order_by:
+                neighbors.sort(key = order_by)
+            for neighbor in reversed(neighbors):
+                stack.enqueue(neighbor)
